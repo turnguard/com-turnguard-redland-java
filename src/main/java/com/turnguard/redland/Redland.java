@@ -60,6 +60,11 @@ public class Redland {
         public int librdf_model_add_string_literal_statement(Model model, Node subject, Node predicate, String label, String language);
         public StreamImpl librdf_model_as_stream(Model model);
         public int librdf_model_sync(Model model);
+        public Storage librdf_model_get_storage(Model model);
+        public int librdf_model_add_statements(Model model, Stream stream);
+        public int librdf_model_has_arc_in(Model model, Node node, Node property);
+        public int librdf_model_has_arc_out(Model model, Node node, Node property);
+        public Stream librdf_model_find_statements(Model model, Statement statement);
         /* STREAM */
         public int librdf_stream_end(Stream stream);
         public int librdf_free_stream(Stream stream);

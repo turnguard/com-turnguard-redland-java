@@ -7,6 +7,7 @@ import com.turnguard.redland.Model;
 import com.turnguard.redland.Node;
 import com.turnguard.redland.Redland;
 import com.turnguard.redland.Statement;
+import com.turnguard.redland.Storage;
 import com.turnguard.redland.Stream;
 import com.turnguard.redland.utils.GObject;
 import com.turnguard.redland.world.World;
@@ -94,5 +95,29 @@ public class ModelImpl extends Structure implements Model {
     public int sync() {
         return Redland.LIBRDF.librdf_model_sync(this);
     }
+
+    @Override
+    public Storage getStorage() {
+        return Redland.LIBRDF.librdf_model_get_storage(this);
+    }
+
+    @Override
+    public int addStatements(Stream stream) {
+        return Redland.LIBRDF.librdf_model_add_statements(this, stream);
+    }
+
+    @Override
+    public int hasArcIn(Node node, Node property) {
+        return Redland.LIBRDF.librdf_model_has_arc_in(this, node, property);
+    }
     
+    @Override
+    public int hasArcOut(Node node, Node property) {
+        return Redland.LIBRDF.librdf_model_has_arc_out(this, node, property);
+    }   
+
+    @Override
+    public Stream findStatements(Statement statement) {
+        return Redland.LIBRDF.librdf_model_find_statements(this, statement);
+    }
 }
