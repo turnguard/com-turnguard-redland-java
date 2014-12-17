@@ -1,7 +1,5 @@
 package com.turnguard.redland;
 
-import com.turnguard.redland.impl.ModelImpl;
-
 /**
  *
  * @author http://www.turnguard.com/turnguard

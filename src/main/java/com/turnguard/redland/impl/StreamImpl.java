@@ -43,10 +43,19 @@ public class StreamImpl extends Structure implements Stream {
     }
 
     @Override
-    public Statement next() {
-        Statement s = Redland.LIBRDF.librdf_stream_get_object(this);
-        Redland.LIBRDF.librdf_stream_next(this);
+    public int next(){
+        return Redland.LIBRDF.librdf_stream_next(this);
+    }
+    
+    @Override
+    public Statement getObject() {
+        Statement s = Redland.LIBRDF.librdf_stream_get_object(this);   
         return s;
+    }
+
+    @Override
+    public void free() {
+        Redland.LIBRDF.librdf_free_stream(this);
     }
 }
 

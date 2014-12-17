@@ -2,24 +2,18 @@ package com.turnguard.redland;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.PointerType;
-import com.sun.jna.Structure;
-import com.sun.jna.TypeMapper;
 import com.sun.jna.ptr.PointerByReference;
 import com.turnguard.redland.exception.RedlandException;
 import com.turnguard.redland.impl.ModelImpl;
-import com.turnguard.redland.impl.NodeImpl;
 import com.turnguard.redland.base.NodeBase;
+import com.turnguard.redland.impl.ParserImpl;
 import com.turnguard.redland.impl.URIImpl;
 import com.turnguard.redland.impl.StatementImpl;
 import com.turnguard.redland.impl.StorageImpl;
 import com.turnguard.redland.impl.StreamImpl;
 import com.turnguard.redland.utils.GError;
-import com.turnguard.redland.world.World;
-import java.util.Arrays;
+import com.turnguard.redland.impl.WorldImpl;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +34,7 @@ public class Redland {
 
 
     public interface LibRDF extends Library {
-        public World librdf_new_world();
+        public WorldImpl librdf_new_world();
         public void librdf_free_world(World world);
         public void librdf_world_open(World world);
         public StorageImpl librdf_new_storage(World world, String storageName, String name, String options);
@@ -60,22 +54,32 @@ public class Redland {
         public int librdf_model_add_string_literal_statement(Model model, Node subject, Node predicate, String label, String language);
         public StreamImpl librdf_model_as_stream(Model model);
         public int librdf_model_sync(Model model);
-        public Storage librdf_model_get_storage(Model model);
+        public StorageImpl librdf_model_get_storage(Model model);
         public int librdf_model_add_statements(Model model, Stream stream);
         public int librdf_model_has_arc_in(Model model, Node node, Node property);
         public int librdf_model_has_arc_out(Model model, Node node, Node property);
-        public Stream librdf_model_find_statements(Model model, Statement statement);
+        public StreamImpl librdf_model_find_statements(Model model, Statement statement);
+        
+        /* PARSER */
+        public ParserImpl librdf_new_parser(World world, String name, String mimeType, URI typeURI);
+        public void librdf_free_parser(World world, Parser parser);
+        public int librdf_parser_parse_into_model(Parser parser,URI uri,URI baseURI,Model model); 
+        public StreamImpl librdf_parser_parse_as_stream(Parser parser, URI uri, URI baseURI);
+        public StreamImpl librdf_parser_parse_string_as_stream(Parser parser, String string, URI baseURI);
+        
         /* STREAM */
         public int librdf_stream_end(Stream stream);
         public int librdf_free_stream(Stream stream);
         public int librdf_stream_next(Stream stream);
         public StatementImpl librdf_stream_get_object(Stream stream);
+        
         /* STATEMENTS */
         public StatementImpl librdf_new_statement(World world);
         public StatementImpl librdf_new_statement_from_statement(StatementImpl statement);
         public StatementImpl librdf_new_statement_from_statement2(StatementImpl statement);
         public StatementImpl librdf_new_statement_from_nodes(World world, Node subject, Node predicate, Node object);
         public void librdf_statement_init(World world, StatementImpl statement);
+        
         /* NODES */
         public NodeBase librdf_new_node(World w);
         public NodeBase librdf_new_node_from_literal(World w, String label, String xmlLanguage, int is_wf_xml);
@@ -131,6 +135,10 @@ public class Redland {
                 predicate,
                 object
         );
+    }
+    
+    public static Parser newParser(World world, String name, String mimeType, URI typeURI){
+        return Redland.LIBRDF.librdf_new_parser(world, name, mimeType, typeURI);
     }
     
     public static StorageImpl newStorage(World world, String storageName, String name, String options) throws RedlandException{

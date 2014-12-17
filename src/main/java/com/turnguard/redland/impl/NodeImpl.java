@@ -5,7 +5,6 @@ import com.sun.jna.Structure;
 import com.sun.jna.TypeMapper;
 import com.sun.jna.ptr.PointerByReference;
 import com.turnguard.redland.utils.GObject;
-import com.turnguard.redland.world.World;
 import java.util.Arrays;
 import java.util.List;
 

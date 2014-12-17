@@ -8,7 +8,6 @@ import com.turnguard.redland.Redland;
 import com.turnguard.redland.Statement;
 import com.turnguard.redland.base.NodeBase;
 import com.turnguard.redland.utils.GObject;
-import com.turnguard.redland.world.World;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class StatementImpl extends Structure implements Statement {
         return Arrays.asList("parent_instance", "priv");
     }
     
-    public void init(World world){
+    public void init(WorldImpl world){
         Redland.LIBRDF.librdf_statement_init(world, this);
     }
     

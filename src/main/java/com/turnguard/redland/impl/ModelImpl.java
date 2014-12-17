@@ -10,7 +10,6 @@ import com.turnguard.redland.Statement;
 import com.turnguard.redland.Storage;
 import com.turnguard.redland.Stream;
 import com.turnguard.redland.utils.GObject;
-import com.turnguard.redland.world.World;
 import java.util.Arrays;
 import java.util.List;
 

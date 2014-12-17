@@ -1,12 +1,7 @@
 package com.turnguard.redland;
 
 import com.turnguard.redland.exception.RedlandException;
-import com.turnguard.redland.impl.ModelImpl;
-import com.turnguard.redland.impl.StatementImpl;
-import com.turnguard.redland.impl.StorageImpl;
-import com.turnguard.redland.world.World;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.turnguard.redland.impl.WorldImpl;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

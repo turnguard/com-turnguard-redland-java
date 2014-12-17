@@ -7,7 +7,6 @@ import com.turnguard.redland.Model;
 import com.turnguard.redland.Redland;
 import com.turnguard.redland.Storage;
 import com.turnguard.redland.utils.GObject;
-import com.turnguard.redland.world.World;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,13 +1,12 @@
 package com.turnguard.redland;
 
 import com.turnguard.redland.exception.RedlandException;
-import com.turnguard.redland.world.World;
+import com.turnguard.redland.impl.WorldImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
@@ -58,8 +57,9 @@ public class ModelTest {
     public void testStreamModel1(){  
         Stream stream = model.asStream();
         Statement s;
-        while((s = stream.next())!=null){
+        while((s = stream.getObject())!=null){
             System.out.println("testStreamModel1 nextSubject: "+s.getSubject());
+            stream.next();
         }
     }
     
@@ -79,11 +79,34 @@ public class ModelTest {
     }
     
     @Test
+    public void testParseIntoModel(){
+        Parser p = Redland.newParser(world, "turtle", "text/turtle", null);       
+        System.out.println(p);
+        
+        //Stream s = p.parseAsStream(Redland.newURI(world, "/home/turnguard/xx.ttl"), Redland.newURI(world, "file:///home/turnguard/"));
+        //System.out.println("stream " + s);
+        model.addStatements(p.parseAsStream(Redland.newURI(world, "file:///home/turnguard/xx.ttl"), Redland.newURI(world, "file:///home/turnguard/")));
+        /*
+        p.parseIntoModel(
+                Redland.newURI(world, "file:///home/turnguard/xx.ttl"), 
+                null, model);
+        */
+        Stream stream = model.asStream();
+        Statement s;
+        while((s = stream.getObject())!=null){
+            System.out.println("testParseIntoModel nextSubject: "+s.getSubject());
+            stream.next();
+        }   
+        stream.free();
+    }
+    
+    @Test
     public void testStreamModel2(){  
         Stream stream = model.asStream();
         Statement s;
-        while((s = stream.next())!=null){
+        while((s = stream.getObject())!=null){
             System.out.println("testStreamModel2 nextSubject: "+s.getSubject());
+            stream.next();
         }
     }
     
